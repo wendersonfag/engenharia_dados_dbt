@@ -31,10 +31,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   owsbank:
-    dbt_artifacts:
-      +schema: stg
+    # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
-
-on-run-end:
-  - "{{ dbt_artifacts.upload_results(results) }}"
