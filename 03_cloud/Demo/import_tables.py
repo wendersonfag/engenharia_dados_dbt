@@ -1,7 +1,7 @@
 #%% Libraries
 import os
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from getpass import getpass
 
 # %% Variables
@@ -12,6 +12,12 @@ password = getpass('Database password:')
 
 #%% Create database connection
 con = create_engine(f'postgresql+psycopg2://postgres:{password}@localhost:5432/postgres')
+conn = con.connect()
+try:
+    conn.execute(text('CREATE SCHEMA IF NOT EXISTS transactional;'))
+    conn.commit()
+finally:
+    conn.close()
 
 #%% Upload tables
 for table in tables:
