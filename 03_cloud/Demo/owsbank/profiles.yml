@@ -10,3 +10,12 @@ owsbank:
       dbname: "postgres"
       schema: "development"
       threads: 4
+    prod:
+      type: "postgres"
+      host: "localhost"
+      user: "postgres"
+      password: "1234"
+      port: 5432
+      dbname: "postgres"
+      schema: "analytics"
+      threads: 4
