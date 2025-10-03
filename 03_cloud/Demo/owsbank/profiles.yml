@@ -5,7 +5,7 @@ owsbank:
       type: "postgres"
       host: "localhost"
       user: "postgres"
-      password: "1234"
+      password: "{{ env_var('PASS') }}"
       port: 5432
       dbname: "postgres"
       schema: "development"
@@ -14,7 +14,7 @@ owsbank:
       type: "postgres"
       host: "localhost"
       user: "postgres"
-      password: "1234"
+      password: "{{ env_var('PASS') }}"
       port: 5432
       dbname: "postgres"
       schema: "analytics"

@@ -2,4 +2,4 @@
     materialized='table'
 ) }}
 
-SELECT * FROM transactional.accounts
+SELECT * FROM {{ source('mysql_raw', 'accounts') }}
