@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: mysql_raw
+    database: postgres
+    schema: transactional
+    tables: 
+      - name: accounts
+        tags: ['painel_contas', 'hourly']
+      - name: city
+      - name: country
+      - name: customers
+        tags: ['painel_contas', 'hourly']
+      - name: d_month
+      - name: d_time
+      - name: d_week
+      - name: d_weekday
+      - name: d_year
+      - name: pix_movements
+      - name: state
+      - name: transfer_ins
+      - name: transfer_outs
+
+exposures:
+  - name: painel_contas
+    tags: ['painel_contas', 'daily']
+    label: painel de contas
+    type: dashboard
+    maturity: high
+    url: https://bi.tool/dashboards/1
+    description: "{{ doc('descricao') }}"
+    depends_on:
+      - ref('stg_accounts')
+      - source('mysql_raw', 'customers')
+    owner:
+      name: Matheus
+      email: matheus@gmail.com
+
+
+models:
+  - name: stg_accounts
+    description: modelo contendo os dados limpos da tabela accounts
+    columns:
+      - name: account_id
+        description: Chave primária da tabela
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: chave primária da tabela customers
+        tests:
+          - unique
+          - not_null
+          - relationships:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive']
+  - name: stg_customers
+    description: modelo contendo os dados limpos da tabela customers
