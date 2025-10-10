@@ -60,3 +60,13 @@ models:
               values: ['active', 'inactive']
   - name: stg_customers
     description: modelo contendo os dados limpos da tabela customers
+  - name: d_time
+    description: dimensao tempo"
+    columns:
+    - name: action_month
+      description: coluna referente ao mês
+      tests:
+        - dbt_expectations.expect_column_values_to_be_between:
+            arguments:
+              min_value: 1
+              max_value: 12
